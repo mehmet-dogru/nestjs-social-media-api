@@ -1,0 +1,25 @@
+version: '3.3'
+services:
+  app:
+    build:
+      context: . # Dockerfile'ın bulunduğu dizin
+    container_name: nestjs-api
+    networks:
+      - appNetwork
+    ports:
+      - '3000:3000'
+  db:
+    image: postgres
+    container_name: postgres-server
+    ports:
+      - '5432:5432'
+    networks:
+      - appNetwork
+    volumes:
+      - ./postgres-data:/data/db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+networks:
+  appNetwork:
+    driver: bridge
